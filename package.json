@@ -1,0 +1,22 @@
+{
+  "name": "tech-track2022",
+  "version": "1.0.0",
+  "description": "This is a project for the subject: Tech Track 2022. Learning about to create meaningful, beautiful and interactive data visualizations.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hoa0/tech-track2022.git"
+  },
+  "author": "Thuan - Hoa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hoa0/tech-track2022/issues"
+  },
+  "homepage": "https://github.com/Hoa0/tech-track2022#readme",
+  "dependencies": {
+    "d3": "^7.6.1"
+  }
+}
