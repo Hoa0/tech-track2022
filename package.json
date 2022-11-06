@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "nuxt": "3.0.0-rc.13"
+  },
+  "dependencies": {
+    "d3": "^7.6.1"
   }
 }
