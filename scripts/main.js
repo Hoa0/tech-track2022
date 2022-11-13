@@ -1,57 +1,108 @@
 // Our bundler automatically creates styling when imported in the main JS file!
 import '../styles/style.css'
+import { getData } from './data';
+// import { map } from './d3';
 
-// We can use node_modules directely in the browser!
-import * as d3 from 'd3';
-
-//https://app.ticketmaster.com/discovery/v2/venues?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*
-const baseURL = "https://app.ticketmaster.com/discovery/v2";
-const venues = "/venues";
-const offers = "/offers";
-const events = "/events";
-const key = "?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*";
-const endpoint = `${baseURL}${venues}${key}`;
+const nlVenues = "&countryCode=NL";
+const test = `https://app.ticketmaster.com/discovery/v2/venues?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*${nlVenues}`;
 const countryEvents = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*&countryCode=NL";
-const test = "https://app.ticketmaster.com/discovery/v2/venues?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*";
 
-// function getData() {
-//     fetch(endpoint)
-//         .then((res) => res.json())
-//         .then((data) => {
-//             console.log(data?._embedded?.venues);
+import * as d3 from 'd3';
+import { max, min } from 'd3';
+// import * as L from 'leaflet';
 
-//         });
+// Lege array voor de markers van de locaties
+let markersCity = [];
+
+//IIFE async arrow
+(async () => {
+    getData(test).then((event) => {
+        return event.map((e) => {
+            // console.log(e?.location)
+            markersCity.push(e?.location)
+            return e?.location
+        })
+    })
+})();
+
+//Map maken voor leaflet en d3
+let map = L.map('map', {
+    map: 'Holland',
+    center: [52.2129919, 5.2793703],  //center positie coords
+    zoom: 7,
+});
+
+
+// Maak tiles aan voor de map, via openstreet 
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+    maxZoom: 16,
+}).addTo(map);
+
+L.svg().addTo(map);
+
+d3.json(test)
+    .then((data) => {
+        return data._embedded.venues.map((vl) => {
+            return {
+                name: vl?.name,
+                location: vl?.location,
+                address: {
+                    address: vl?.address,
+                    city: vl?.city.name,
+                    country: vl?.country,
+                    state: vl?.state
+                }
+            }
+        })
+    })
+    // .then((data) => {
+    //     return data.map(d => {
+    //         return d.location
+    //     })
+    // })
+    .then(data => {
+        // return data
+        d3.select("#map")
+            .select("svg")
+            .selectAll("myCircles")
+            .data(data)
+            .join("circle")
+            .attr("cx", d => map.latLngToLayerPoint([d.location.latitude, d.location.longitude]).x)
+            .attr("cy", d => map.latLngToLayerPoint([d.location.latitude, d.location.longitude]).y)
+            .attr("r", 14)
+            .style("fill", "red")
+            .attr("stroke", "red")
+            .attr("stroke-width", 3)
+            .attr("fill-opacity", .4)
+    })
+
+// async function createGraph() {
+//     // console.log(await markersCity)
+//     //select svg area, add circles
+//     d3.select("#map")
+//         .select("svg")
+//         .selectAll("myCircles")
+//         .data(await markersCity)
+//         .join("circle")
+//         .attr("cx", d => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
+//         .attr("cy", d => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
+//         .attr("r", 14)
+//         .style("fill", "red")
+//         .attr("stroke", "red")
+//         .attr("stroke-width", 3)
+//         .attr("fill-opacity", .4)
 // }
 
-// getData();
+// async function update() {
+//     d3.selectAll("circle")
+//         .attr("cx", d => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
+//         .attr("cy", d => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
+// }
+// // If the user change the map (zoom or drag), I update circle position:
+// map.on("moveend", update)
 
-function getData(key) {
-    fetch(key)
-        .then((res) => res.json())
-        .then((data) => {
-            // console.log(data._embedded.venues) //console.log object in zijn geheel
-            return data._embedded.venues.map((venueLocation) => {
-                return {
-                    name: venueLocation?.name,
-                    location: venueLocation?.location,
-                    address: {
-                        address: venueLocation?.address,
-                        city: venueLocation?.city.name,
-                        country: venueLocation?.country,
-                        state: venueLocation?.state
-                    }
-                };
-            });
-        })
-        .then((data) => {
-            console.log(data);
-            return data;
-        });
-}
+// createGraph()
 
-getData(test);
-
-
-
-
-
+export { test, nlVenues, countryEvents }
