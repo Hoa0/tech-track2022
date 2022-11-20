@@ -4,12 +4,13 @@ import { getData } from './data';
 // import { map } from './d3';
 
 const nlVenues = "&countryCode=NL";
-const test = `https://app.ticketmaster.com/discovery/v2/venues?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*${nlVenues}`;
-const countryEvents = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*&countryCode=NL";
+const key = `uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF`
+const test = `https://app.ticketmaster.com/discovery/v2/venues?apikey=${key}&locale=*${nlVenues}`;
+const countryEvents = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=${key}&locale=*&countryCode=NL";
+// const musicEvents = `https://app.ticketmaster.com/discovery/v2/events.json?&classificationName=music&city=${city}&apikey=${key}`
 
 import * as d3 from 'd3';
-import { max, min } from 'd3';
-// import * as L from 'leaflet';
+import * as L from 'leaflet';
 
 // Lege array voor de markers van de locaties
 let markersCity = [];
@@ -57,11 +58,6 @@ d3.json(test)
             }
         })
     })
-    // .then((data) => {
-    //     return data.map(d => {
-    //         return d.location
-    //     })
-    // })
     .then(data => {
         // return data
         d3.select("#map")
@@ -78,31 +74,31 @@ d3.json(test)
             .attr("fill-opacity", .4)
     })
 
-// async function createGraph() {
-//     // console.log(await markersCity)
-//     //select svg area, add circles
-//     d3.select("#map")
-//         .select("svg")
-//         .selectAll("myCircles")
-//         .data(await markersCity)
-//         .join("circle")
-//         .attr("cx", d => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
-//         .attr("cy", d => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
-//         .attr("r", 14)
-//         .style("fill", "red")
-//         .attr("stroke", "red")
-//         .attr("stroke-width", 3)
-//         .attr("fill-opacity", .4)
-// }
+async function createGraph() {
+    // console.log(await markersCity)
+    //select svg area, add circles
+    d3.select("#map")
+        .select("svg")
+        .selectAll("myCircles")
+        .data(await markersCity)
+        .join("circle")
+        .attr("cx", d => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
+        .attr("cy", d => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
+        .attr("r", 14)
+        .style("fill", "red")
+        .attr("stroke", "red")
+        .attr("stroke-width", 3)
+        .attr("fill-opacity", .4)
+}
 
-// async function update() {
-//     d3.selectAll("circle")
-//         .attr("cx", d => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
-//         .attr("cy", d => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
-// }
-// // If the user change the map (zoom or drag), I update circle position:
-// map.on("moveend", update)
+async function update() {
+    d3.selectAll("circle")
+        .attr("cx", d => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
+        .attr("cy", d => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
+}
+// If the user change the map (zoom or drag), I update circle position:
+map.on("moveend", update)
 
-// createGraph()
+createGraph()
 
 export { test, nlVenues, countryEvents }
