@@ -1,4 +1,3 @@
-// Our bundler automatically creates styling when imported in the main JS file!
 import '../styles/style.css'
 import * as d3 from 'd3';
 import * as L from 'leaflet';
@@ -29,7 +28,21 @@ L.svg().addTo(map);
 
 getData(test)
     .then((data) => {
+        // console.log(data)
         return data._embedded.venues.map((vl) => {
+            console.log(
+                vl
+                // {
+                //     name: vl?.name,
+                //     location: vl?.location,
+                //     address: {
+                //         address: vl?.address,
+                //         city: vl?.city.name,
+                //         country: vl?.country,
+                //         state: vl?.state
+                //     }
+                // }
+            )
             return {
                 name: vl?.name,
                 location: vl?.location,
