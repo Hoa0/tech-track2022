@@ -3,7 +3,9 @@ const baseURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=";
 const venues = "/venues";
 const offers = "/offers";
 const events = "/events";
-const key = "?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*";
+//const key = "?apikey=uC0UADyMdASdYwjLJRHfjH8AjPzRlhFF&locale=*";
+const key = "?apikey=u0G9Za94ZmBAu0QmSQl5H4tNKe1zr8vg&locale=*";
+
 const endpoint = `${baseURL}${events}${key}`;
 
 // function getData(key) {

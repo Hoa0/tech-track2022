@@ -9,3 +9,20 @@ body {
   border: 1px solid black;
   overflow: hidden;
 }
+
+/* #tooltip {
+  position: absolute;
+  background: #444444;
+  color: #ffffff;
+  font-family: sans-serif;
+  padding: 0.5em;
+  box-shadow: 5px 3px 14px -1px rgba(0, 0, 0, 0.46);
+  border-radius: 5px;
+  opacity: 0;
+  pointer-event: none;
+} */
+
+.circle:hover {
+  stroke: black;
+  stroke-width: 4px;
+}
