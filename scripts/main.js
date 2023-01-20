@@ -20,15 +20,19 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 L.svg().addTo(map);
 
+const cardsEvents = document.getElementById("cards-container")
+
 getData("/scripts/exV2.json")
     .then((data) => {
-        console.log(data);
+        // console.log(data);
         return data._embedded.events.map((vl) => {
-            //console.log(vl);
+            console.log(vl);
+            //genre laten zien in de dropdown
             let option = document.createElement("option");
-            option.value = vl?.id;
-            option.innerHTML = vl?.name;
-            document.querySelector('#eventSelect').appendChild(option)
+            option.value = vl?.classifications[0]?.genre?.id;
+            option.innerHTML = vl?.classifications[0]?.genre?.name;
+            document.querySelector('#eventSelect').appendChild(option);
+
             return {
                 genre: {
                     genres: vl?.classifications,
@@ -44,10 +48,7 @@ getData("/scripts/exV2.json")
             };
         });
     })
-    .then((data) => {
-        console.log(data);
-        return data;
-    })
+
     .then((data) => {
         // return data
         d3.select("#map")
@@ -71,7 +72,6 @@ getData("/scripts/exV2.json")
             .attr("stroke-width", 3)
             .attr("fill-opacity", .4)
     });
-
 async function createGraph() {
     // console.log(await markersCity)
     //select svg area, add circles
@@ -135,23 +135,51 @@ let markersCity = [];
         });
 })();
 
-d3.select('#eventSelect')
-    .on('change', function () {
-        let getVenueId = d3.select(this).property('value')
-        console.log(getVenueId)
-        let prom = getData("/scripts/exV2.json").then((res) => {
-            //return res._embedded.events
-            //return res._embedded.venues
-            //return res._embedded.events.classifications.segment
-            return res._embedded.venues
-        })
-        Promise.resolve(prom).then((value) => {
-            value.map((event) => {
-                console.dir(event)
-                return event
-            })
-            // console.log("hii", value)
-        })
+getData("/scripts/exV2.json")
+    .then((eventContent) => {
+
+        //   let dataElement = eventContent?._embedded?.events;
+        // console.log(typeof (eventContent?._embedded?.events))
+        // console.log(eventContent)
+        return eventContent?._embedded?.events.map((e) => {
+
+            const div = document.createElement("div");
+            const name = document.createElement("h2");
+            const date = document.createElement("p");
+            const genre = document.createElement("p");
+
+            name.innerText = `name: ${e?.name}`
+            date.innerText = `date: ${e?.dates.start.localDate}`
+            genre.innerText = `genre: ${e?.classifications[0].genre.name}` // eerste element van array [0], anders loop gebruiken, object array etc
+            div.appendChild(name)
+            div.appendChild(date)
+            div.appendChild(genre)
+
+            cardsEvents.appendChild(div)
+        });
     })
 
+d3.select('#eventSelect')
+    .on('change', function () {
+
+        let getEventId = d3.select(this).property("value");
+        console.log(getEventId)
+        let prom = getData("/scripts/exV2.json")
+            .then((res) => {
+                return res._embedded.events
+            })
+        Promise.resolve(prom).then((value) => {
+            // HIER FILTER JE DE DATA DIE JE KRIJGT VAN DE DROPDOWN ACTIE. ALS JE EEN OPTIE KIEST KRIJG JE MINDER DAN 20 OPTIES (DE AANTAL OPTIES DIE DE GENRE HEEFT DIE JE KIEST)
+            let filterArr = value.filter((eventGenre) => {
+                return eventGenre?.classifications[0].genre.id == getEventId;
+            });
+            //console.log(filterArr);
+            value.map((event) => {
+                return event;
+            });
+
+        });
+    });
+
 createGraph();
+

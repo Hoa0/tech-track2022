@@ -6,7 +6,7 @@
     <meta name="author" content="Thuan - Hoa">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg+xml" href="/favicon.ico">
-    <title> Home &mdash; </title>
+    <title> TicketMaster &mdash; events </title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
         integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
@@ -19,30 +19,20 @@
 
 <body>
     <header>
-        <h1></h1>
-        <nav>
-
-        </nav>
+        <h1>TicketMaster events</h1>
     </header>
 
     <main>
         <section id="about">
-            <header>
-                <h1>Hallo Wereld</h1>
-                <p>TicketMaster events</p>
-                <p>Retrieve location</p>
-                <button class="btn--location">Get location</button>
-                <select id="eventSelect"></select>
-            </header>
-            <!-- <section>
-                <input type="checkbox" class="circleEvents" value="A" checked><label>A test</label>
-                <input type="checkbox" class="circleEvents" value="B" checked><label>B test</label>
-                <input type="checkbox" class="circleEvents" value="C" checked><label>C test</label>
-            </section> -->
+            <p>Bekijk de aankomende events in Nederland</p>
+            <button class="btn--location">Get location</button>
+            <select name="events" id="eventSelect"></select>
+            <section id="map"></section>
         </section>
-        <section id="map"></section>
-        <section id="iets"></section>
-        <!-- <div id="tooltip"></div> -->
+        <section>
+            <div id="cards-container">
+            </div>
+        </section>
     </main>
     <!-- footer -->
     <footer>
