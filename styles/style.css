@@ -45,6 +45,10 @@ h3 {
 p {
   font-size: 0.8rem;
 }
+
+img {
+  width: 100%;
+}
 header,
 footer {
   text-align: center;
@@ -60,19 +64,33 @@ main {
 }
 
 #map {
-  max-width: 30rem;
+  max-width: 40rem;
   height: 400px;
   border: 1px solid black;
   overflow: hidden;
 }
 
+main > section:nth-of-type(2) {
+  margin-top: 2em;
+}
 #cards-container {
-  max-width: 25rem;
+  max-width: 40rem;
+  display: grid;
+  grid-template-columns: 15rem 15rem;
 }
 
 #cards-container > div {
-  padding: 1rem;
   margin: 0.5rem;
-  border-radius: 0.5rem;
-  /* background: rgb(255, 255, 255); */
+  background: #e5d3bb;
+}
+
+#cards-container > div > h2 {
+  margin-bottom: 1rem;
+}
+#cards-container > div {
+  padding-bottom: 1em;
+}
+#cards-container > div > h2,
+p {
+  padding: 0 1rem;
 }

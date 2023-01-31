@@ -48,23 +48,6 @@ getData("/scripts/exV2.json")
             };
         });
     })
-    // .then((data) => {
-    //     console.log(data);
-    //     return data;
-    // })
-    // .then((data) => {
-
-    //     return data.map((e) => {
-    //         const div = document.createElement('div');
-    //         const name = document.createElement('h3');
-    //         name.innerText = `name: ${e?.name}`
-
-    //         div.appendChild(name)
-
-    //         cardsEvents.appendChild(div)
-
-    //     });
-    // })
     .then((data) => {
         // return data
         d3.select("#map")
@@ -89,7 +72,6 @@ getData("/scripts/exV2.json")
             .attr("fill-opacity", .4)
     });
 async function createGraph() {
-    // console.log(await markersCity)
     //select svg area, add circles
     d3.select("#map")
         .select("svg")
@@ -153,10 +135,6 @@ let markersCity = [];
 
 getData("/scripts/exV2.json")
     .then((eventContent) => {
-
-        //   let dataElement = eventContent?._embedded?.events;
-        // console.log(typeof (eventContent?._embedded?.events))
-        // console.log(eventContent)
         return eventContent?._embedded?.events.map((e) => {
 
             const div = document.createElement("div");
@@ -200,6 +178,47 @@ d3.select('#eventSelect')
 
         });
     });
+
+    //test
+function updateGenre() {
+    d3.select("#map")
+        .select("svg")
+        .selectAll("myCircles")
+        .data(markersCity)
+        .join(
+            (enter) =>
+                enter
+                    .append("circle")
+                    .attr(
+                        "cx",
+                        (d) =>
+                            map.latLngToLayerPoint([d?.location.coords.latitude, d?.location.coords.longitude]).x
+                    )
+                    .attr(
+                        "cy",
+                        (d) =>
+                            map.latLngToLayerPoint([d?.location.coords.latitude, d?.location.coords.longitude]).y
+                    )
+                    .style("fill", "brown")
+                    // .transition().duration(1000)
+                    .style("opacity", 1)
+                    .selection()
+            ,
+            (update) =>
+                update
+                // .transition().duration(1000)
+                 .style("fill", "black")
+                 .selection()
+            ,
+            (exit) =>
+                exit
+               // .transition().duration(1000)
+                    .style("opacity", 0)
+                    .remove()
+
+        );
+
+}
 
 createGraph();
 
