@@ -2,17 +2,14 @@ import * as d3 from "d3";
 import { getData } from "./data";
 import { map } from "./variables"
 
+
 async function renderLocation(url) {
     getData(url)
         .then((data) => {
             // console.log(data);
             return data._embedded.events.map((vl) => {
-
+                createDropdownOption(vl?.classifications[0]?.genre?.id, vl?.classifications[0]?.genre?.name)
                 // genre laten zien in de dropdown
-                let option = document.createElement("option");
-                option.value = vl?.classifications[0]?.genre?.id;
-                option.innerHTML = vl?.classifications[0]?.genre?.name;
-                document.querySelector('#eventSelect').appendChild(option);
                 return {
                     genre: {
                         genres: vl?.classifications,
@@ -34,7 +31,18 @@ async function renderLocation(url) {
                 .select("svg")
                 .selectAll("myCircles")
                 .data(data)
-                .join("circle")
+                .join(
+                    enter => {
+                        return enter
+                        .append("circle")
+                    },
+                    update => {
+                        return update
+                    },
+                    exit => {
+                        return exit.remove()
+                    }
+                )
                 .attr(
                     "cx",
                     (d) =>
@@ -87,6 +95,39 @@ async function update() {
 // If the user change the map (zoom or drag), I update circle position:
 map.on("moveend", update);
 
+function updateGenre(){
+    d3.selectAll(option).each(function(d){
+        optionData = d3.select(this);
+        grp = optionData.property("value")
+        
+    })
+}
+
+
+
+let temp = []
+// DIT ACHTERWEGE LATEN. LOGICA OM DUPLICATEN UIT DE SELECT TE HALEN.
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+// Functie om dropdown opties te maken.
+function createDropdownOption(value, name) {
+    // voeg waarde toe aan de tijdelijke array (bovenin het bestand gedefineerd.)
+    temp.push({value, name})
+    let unique = temp.filter(onlyUnique)
+    // console.log(unique)
+    
+    let option = document.createElement("option");
+    option.value = value;
+    option.innerHTML = name;
+    document.querySelector('#eventSelect').appendChild(option);
+
+    // console.log(temp)
+    // let option = document.createElement("option");
+    // option.value = value;
+    // option.innerHTML = name;
+    // document.querySelector('#eventSelect').appendChild(option);
+}
 
 
 export { renderLocation, createGraph }
