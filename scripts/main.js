@@ -1,205 +1,62 @@
-import "../styles/style.css";
-import * as d3 from "d3";
-import * as L from "leaflet";
-import { getData } from "./data";
-import { getCoordinates } from "./helpers";
+import '../styles/style.css';
+import * as d3 from 'd3';
+import genres from './genres';
+import createScatterPlot from './scatterplot'
 
-//Map maken voor leaflet en d3
-let map = L.map("map", {
-    map: "Holland",
-    center: [52.2129919, 5.2793703], //center positie coords
-    zoom: 7,
-});
+console.log('movie api visualisation');
 
-// Maak tiles aan voor de map, via openstreet
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
-    maxZoom: 16,
-}).addTo(map);
+// scatterplot met tooltip
+/*
+Iedere film heeft een vote_average en een vote_count.
+De locatie van een bal is afhankelijk van hoeveel stemmen het heeft en wat de average score ervan is.
+Dit kan je filteren op genre (of de volgende pagina ophalen)
+---
+optioneel:
+grouperen op basis van genre
+*/
 
-L.svg().addTo(map);
+const key = '4b71f51362658b415354850521164bd5';
+const page = "&page=";
+let pageIdentifier = "1";
+const popular = `https://api.themoviedb.org/3/movie/popular?api_key=${key}&region=nl`;
+const playingNow = `https://api.themoviedb.org/3/movie/now_playing?api_key=${key}`;
+const latest = `https://api.themoviedb.org/3/movie/latest?api_key=${key}`;
+const posterUrl = 'https://image.tmdb.org/t/p/w500/';
 
-const cardsEvents = document.getElementById("cards-container")
+async function getData(url) {
+  const response = await fetch(url);
+  const data = await response.json();
+//   console.log(data)
+  return data;
+}
 
-getData("/scripts/exV2.json")
-    .then((data) => {
-        // console.log(data);
-        return data._embedded.events.map((vl) => {
-            console.log(vl);
-            //genre laten zien in de dropdown
+async function cleaningData(dataset) {
+  let d = await dataset;
+  return d.results.map(movie => {
+
+    // console.log(movie)
+  });
+}
+cleaningData(getData(popular));
+
+function createDropdown(selector) {
+    // Dropdown maken en deze de genres meegeven (dit is handmatig geschreven omdat de API dit niet meegeeft.)
+    genres.forEach(element => {
+        d3.select(selector)
             let option = document.createElement("option");
-            option.value = vl?.classifications[0]?.genre?.id;
-            option.innerHTML = vl?.classifications[0]?.genre?.name;
-            document.querySelector('#eventSelect').appendChild(option);
-
-            return {
-                genre: {
-                    genres: vl?.classifications,
-                },
-                name: vl?.name,
-                location: {
-                    coords: vl?._embedded.venues[0].location,
-                    city: vl?._embedded.venues[0].city.name,
-                    country: vl?._embedded.venues[0].country.name,
-                    name: vl?._embedded.venues[0].name,
-                    postal: vl?._embedded.venues[0].postalCode,
-                },
-            };
-        });
-    })
-    // .then((data) => {
-    //     console.log(data);
-    //     return data;
-    // })
-    // .then((data) => {
-
-    //     return data.map((e) => {
-    //         const div = document.createElement('div');
-    //         const name = document.createElement('h3');
-    //         name.innerText = `name: ${e?.name}`
-
-    //         div.appendChild(name)
-
-    //         cardsEvents.appendChild(div)
-
-    //     });
-    // })
-    .then((data) => {
-        // return data
-        d3.select("#map")
-            .select("svg")
-            .selectAll("myCircles")
-            .data(data)
-            .join("circle")
-            .attr(
-                "cx",
-                (d) =>
-                    map.latLngToLayerPoint([d.location.coords.latitude, d.location.coords.longitude]).x
-            )
-            .attr(
-                "cy",
-                (d) =>
-                    map.latLngToLayerPoint([d.location.coords.latitude, d.location.coords.longitude]).y
-            )
-            .attr("r", 14)
-            .style("fill", "red")
-            .attr("stroke", "red")
-            .attr("stroke-width", 3)
-            .attr("fill-opacity", .4)
-    });
-async function createGraph() {
-    // console.log(await markersCity)
-    //select svg area, add circles
-    d3.select("#map")
-        .select("svg")
-        .selectAll("myCircles")
-        .data(await markersCity)
-        .join("circle")
-        .attr("cx", (d) => map.latLngToLayerPoint([d.latitude, d.longitude]).x)
-        .attr("cy", (d) => map.latLngToLayerPoint([d.latitude, d.longitude]).y)
-        .attr("r", 14)
-        .style("fill", "red")
-        .attr("stroke", "red")
-        .attr("stroke-width", 3)
-        .attr("fill-opacity", 0.4);
+            option.value = element.id
+            option.innerHTML = element.name;
+            document.querySelector(selector).appendChild(option);
+        })
+        
+        d3.select(selector).on('change', (e) => {
+            console.log(e.target.value)
+        })
 }
 
-async function update() {
-    d3.selectAll("circle")
-        // longLat data ophalen van data.location
-        .attr(
-            "cx",
-            (d) =>
-                map.latLngToLayerPoint([d?.location.coords.latitude, d?.location.coords.longitude]).x
-        )
-        .attr(
-            "cy",
-            (d) =>
-                map.latLngToLayerPoint([d?.location.coords.latitude, d?.location.coords.longitude]).y
-        );
-}
-// If the user change the map (zoom or drag), I update circle position:
-map.on("moveend", update);
+// createDropdown('#genreSelector')
 
-// Lege array voor de markers van de locaties
-let markersCity = [];
 
-// IIFE async arrow
-(async () => {
-    getData("/scripts/exV2.json")
-        .then((event) => {
-            // Juiste event data ophalen, ipv alleen event. daar binnen in heb ik de venues van nodig
-            let dataElement = event?._embedded?.events;
 
-            return dataElement.map((e) => {
-                // console.log(e?.location)
-                //  console.log(e)
-                markersCity.push(e?._embedded.venues.location);
-                return e?._embedded.venues.location;
-            });
-        })
-        .then((event) => {
-            // console.log(event)
-        })
-    document
-        .querySelector(".btn--location")
-        .addEventListener("click", (event) => {
-            // console.log(event)
-            getCoordinates();
-            updateLocation(getCoordinates());
-        });
-})();
 
-getData("/scripts/exV2.json")
-    .then((eventContent) => {
-
-        //   let dataElement = eventContent?._embedded?.events;
-        // console.log(typeof (eventContent?._embedded?.events))
-        // console.log(eventContent)
-        return eventContent?._embedded?.events.map((e) => {
-
-            const div = document.createElement("div");
-            const name = document.createElement("h2");
-            const date = document.createElement("p");
-            const genre = document.createElement("p");
-            const img = document.createElement("img");
-
-            name.innerText = `${e?.name}`
-            date.innerText = `Date: ${e?.dates.start.localDate}`
-            genre.innerText = `Genre: ${e?.classifications[0].genre.name}` // eerste element van array [0], anders loop gebruiken, object array etc
-            img.src = `${e?.images[0].url}`
-
-            div.appendChild(img)
-            div.appendChild(name)
-            div.appendChild(date)
-            div.appendChild(genre)
-
-            cardsEvents.appendChild(div)
-        });
-    })
-
-d3.select('#eventSelect')
-    .on('change', function () {
-
-        let getEventId = d3.select(this).property("value");
-        console.log(getEventId)
-        let prom = getData("/scripts/exV2.json")
-            .then((res) => {
-                return res._embedded.events
-            })
-        Promise.resolve(prom).then((value) => {
-            // HIER FILTER JE DE DATA DIE JE KRIJGT VAN DE DROPDOWN ACTIE. ALS JE EEN OPTIE KIEST KRIJG JE MINDER DAN 20 OPTIES (DE AANTAL OPTIES DIE DE GENRE HEEFT DIE JE KIEST)
-            let filterArr = value.filter((eventGenre) => {
-                return eventGenre?.classifications[0].genre.id == getEventId;
-            });
-            //console.log(filterArr);
-            value.map((event) => {
-                return event;
-            });
-
-        });
-    });
-
-createGraph();
-
+createScatterPlot(popular)

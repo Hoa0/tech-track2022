@@ -6,32 +6,28 @@
     <meta name="author" content="Thuan - Hoa">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/svg+xml" href="/favicon.ico">
-    <title> TicketMaster &mdash; events </title>
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-        crossorigin=""></script>
+    <title> Movie API </title>
 
 </head>
 
 <body>
     <header>
-        <h1>TicketMaster events</h1>
+        <h1>Movie visualisation</h1>
+        <p>Ben jij ook zo benieuwd hoe groot het budget was van de afgelopen films? Hieronder krijg je het gevisualiseerd te zien!</p>
     </header>
 
     <main>
-        <section id="about">
-            <p>Bekijk de aankomende events in Nederland</p>
-            <!-- <button class="btn--location">Get location</button> -->
-            <select name="events" id="eventSelect"></select>
-            <section id="map"></section>
+        <section>
+            <label for="maxScore">max score:
+                <input type="number" name="maxScore" id="maxScore" min="1" max="10" value="10">
+            </label>
+            <!-- <select name="genres" id="genreSelector">
+                <option value="" disabled selected>Selecteer een genre</option>
+            </select> -->
+            <div id="grafiek"></div>
         </section>
         <section>
-            <div id="cards-container">
-            </div>
+            <div id="barchart"></div>
         </section>
     </main>
     <!-- footer -->
@@ -39,7 +35,7 @@
         <p>&copy;2022 &dash; Thuan - Hoa Le </p>
     </footer>
 
-    <script type="module" src="./scripts/main3.js"></script>
+    <script type="module" src="./scripts/main.js"></script>
 </body>
 
 </html>
