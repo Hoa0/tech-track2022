@@ -8,10 +8,10 @@ In deze repo vind je alle informatie over hoe dit project tot stand is gekomen. 
 
 ## User story
 Barchart: <br>
-Als filmliefhebber, wil ik de meest populaire film weten en scores bekijken die mensen de film hebben gegeven.
+Als filmliefhebber, wil ik de meest populaire film weten en de scores bekijken die mensen de film hebben gegeven.
 
 Scatterplot: <br>
-Als filmliefhebber, wil ik per film kunnen zien wat de score zijn dat gebaseerd op de gemiddelde score.
+Als filmliefhebber, wil ik per film kunnen zien wat de score is op basis van de gemiddelde score en de score count.
 
 ## Features
 
