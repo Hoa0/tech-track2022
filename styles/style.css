@@ -47,7 +47,7 @@ p {
 }
 
 img {
-  width: 100%;
+  width: 50%;
 }
 header,
 footer {
@@ -57,10 +57,36 @@ footer {
 header > h1 {
   color: #46754d;
 }
-
+/* 
 main {
   display: flex;
   justify-content: center;
+} */
+
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  /* width: 390px; */
+}
+
+.tooltip img {
+  width: unset;
+  max-width: 300px;
+}
+
+.tooltip p {
+  width: 300px;
+  padding: 1rem 0;
+  font-weight: bold;
+}
+
+.tooltip p:last-of-type {
+  font-weight: 400;
+  padding-top: 0;
+}
+
+#grafiek{
+  display: flex;
 }
 
 #map {
@@ -93,4 +119,22 @@ main > section:nth-of-type(2) {
 #cards-container > div > h2,
 p {
   padding: 0 1rem;
+}
+
+
+main section {
+  min-height: 50vh;
+  width: 100%;
+}
+
+.barchart-tooltip {
+  width: 300px;
+  pointer-events: none;
+  position: absolute;
+  background: #e5d3bb;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #363636;
 }
