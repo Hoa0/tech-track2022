@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Thuan - Hoa" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/tech-track2022/favicon.ico" />
+    <title>Movie API</title>
+  <script type="module" crossorigin src="/tech-track2022/assets/index.9ae593e3.js"></script>
+  <link rel="stylesheet" href="/tech-track2022/assets/index.4ca9a9fe.css">
+</head>
+
+<body>
+    <header>
+        <h1>Movie visualisation</h1>
+    </header>
+
+    <main>
+        <section>
+            <h1>Barcharts</h1>
+            <button class="previous btn">previous page</button>
+            <button class="next btn">next page</button>
+            <select name="selectData" id="selectData">
+              <option value="popularity" selected>Popularity</option>
+              <option value="playingNow">Playing in the cinema</option>
+              <option value="latest">Newest releases</option>
+            </select>
+            <div id="barchart"></div>
+          </section>
+          <section>
+            <h1>Scatterplot - Score to score count relativity</h1>
+            <label for="maxScore"
+              >max score:
+              <input
+                type="number"
+                name="maxScore"
+                id="maxScore"
+                min="1"
+                max="10"
+                value="10"
+              />
+            </label>
+            <div id="grafiek"></div>
+          </section>
+    </main>
+    <!-- footer -->
+    <footer>
+        <p>&copy;2022 &dash; Thuan - Hoa Le </p>
+    </footer>
+
+    
+</body>
+
+</html>
