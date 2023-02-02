@@ -1,1 +1,23 @@
-# tech-track2022
+# Film visualisatie
+
+> Tech-track2022 
+
+## Omschrijving
+
+In deze repo vind je alle informatie over hoe dit project tot stand is gekomen. Voor het vak Tech-track is het einddoel om een interactieve datavisualisatie te realiseren op het web, waarbij externe data, d3, javascript, html, css en programming principes worden toegepast.
+
+## User story
+Barchart: <br>
+Als filmliefhebber, wil ik de meest populaire film weten en scores bekijken die mensen de film hebben gegeven.
+
+Scatterplot: <br>
+Als filmliefhebber, wil ik per film kunnen zien wat de score zijn dat gebaseerd op de gemiddelde score.
+
+## Features
+
+- Meer populaire film tonen en de score.
+- Film details
+- score count op films
+
+## API
+Voor dit project heb ik gebruik gemaakt van [themoviedb](https://www.themoviedb.org/documentation/api?language=nl-NL) API

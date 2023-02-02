@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+
 /* CSS Document */
 *,
 *::after,
@@ -11,6 +12,7 @@ body {
   background-color: antiquewhite;
   color: #363636;
 }
+
 /**************************************************/
 /*-------------GENERAL style ELEMENTS-------------*/
 body,
@@ -47,26 +49,40 @@ p {
 }
 
 img {
-  width: 50%;
+  width: 100%;
 }
+
 header,
 footer {
   text-align: center;
 }
 
-header > h1 {
-  color: #46754d;
+header{
+  margin-bottom:2rem;
 }
-/* 
+
+header>h1 {
+  color: #545654;
+}
+
 main {
-  display: flex;
+  display: grid;
   justify-content: center;
-} */
+}
+
+#grafiek {
+  display: flex;
+}
+
+.p-padding{
+  margin-bottom:2rem;
+}
 
 .tooltip {
   display: flex;
   flex-direction: column;
-  /* width: 390px; */
+  width: fit-content;
+  text-align: start;
 }
 
 .tooltip img {
@@ -76,7 +92,7 @@ main {
 
 .tooltip p {
   width: 300px;
-  padding: 1rem 0;
+  padding: 0.3rem 1rem 0.3rem 1rem;
   font-weight: bold;
 }
 
@@ -85,42 +101,9 @@ main {
   padding-top: 0;
 }
 
-#grafiek{
-  display: flex;
-}
-
-#map {
-  max-width: 40rem;
-  height: 400px;
-  border: 1px solid black;
-  overflow: hidden;
-}
-
-main > section:nth-of-type(2) {
+main>section:nth-of-type(2) {
   margin-top: 2em;
 }
-#cards-container {
-  max-width: 40rem;
-  display: grid;
-  grid-template-columns: 15rem 15rem;
-}
-
-#cards-container > div {
-  margin: 0.5rem;
-  background: #e5d3bb;
-}
-
-#cards-container > div > h2 {
-  margin-bottom: 1rem;
-}
-#cards-container > div {
-  padding-bottom: 1em;
-}
-#cards-container > div > h2,
-p {
-  padding: 0 1rem;
-}
-
 
 main section {
   min-height: 50vh;
@@ -137,4 +120,9 @@ main section {
   font-size: 0.8rem;
   font-weight: bold;
   color: #363636;
+  text-align: start;
+}
+
+.barchart-tooltip p {
+  padding: 0.3rem 1rem 0.3rem 1rem;
 }
