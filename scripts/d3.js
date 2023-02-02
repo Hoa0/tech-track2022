@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { max, min } from 'd3';
 import * as L from 'leaflet';
 import { getData } from './data';
-import { test } from './main';
+import { test } from '../main';
 
 
 let map = L.map('map', {

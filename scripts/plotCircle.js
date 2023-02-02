@@ -5,7 +5,7 @@ import { map } from "./variables"
 async function renderLocation(url) {
     getData(url)
         .then((data) => {
-            // console.log(data);
+            console.log(data);
             return data._embedded.events.map((vl) => {
 
                 // genre laten zien in de dropdown
