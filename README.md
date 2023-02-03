@@ -6,6 +6,8 @@
 
 In deze repo vind je alle informatie over hoe dit project tot stand is gekomen. Voor het vak Tech-track is het einddoel om een interactieve datavisualisatie te realiseren op het web, waarbij externe data, d3, javascript, html, css en programming principes worden toegepast.
 
+Voor meer informatie over mijn proces bekijk de [wiki](https://github.com/Hoa0/tech-track2022/wiki)
+
 ## User story
 
 Barchart: <br>
