@@ -6,9 +6,9 @@
     <meta name="author" content="Thuan - Hoa" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/tech-track2022/favicon.ico" />
-    <title>Movie API</title>
-  <script type="module" crossorigin src="/tech-track2022/assets/index.9ae593e3.js"></script>
-  <link rel="stylesheet" href="/tech-track2022/assets/index.301e2b7a.css">
+    <title>Movie visualisatie</title>
+  <script type="module" crossorigin src="/tech-track2022/assets/index.2939ff3c.js"></script>
+  <link rel="stylesheet" href="/tech-track2022/assets/index.f8121563.css">
 </head>
 
 <body>
@@ -19,23 +19,27 @@
     </header>
 
     <main>
-        <section>
+        <section class="container-charts">
             <h2 class="hide-elements"> Container met daarin twee grafieken over films score</h2>
             <section>
                 <h2>Barchart</h2>
                 <p class="p-padding">De meest populaire films met scores die mensen de film hebben gegeven. </p>
-                <button class="previous btn">previous page</button>
-                <button class="next btn">next page</button>
-                <select name="selectData" id="selectData">
-                    <option value="popularity" selected>Popularity</option>
-                    <option value="playingNow">Playing in the cinema</option>
-                    <option value="latest">Newest releases</option>
-                </select>
+                <p>Y-as: populaire films</p>
+                <p>X-as: score</p>
+
                 <div id="barchart"></div>
+                <section id="btn-chart">
+                    <p>Meer films tonen </p>
+                    <button class="previous btn">Vorige</button>
+                    <button class="next btn">Volgende</button>
+                </section>
+
             </section>
-            <section>
+            <section class="container-charts">
                 <h2>Scatterplot</h2>
                 <p class="p-padding">Gemiddelde score van een film</p>
+                <p>Y-as: Aantal score</p>
+                <p>X-as: score</p>
                 <label for="maxScore">max score:
                     <input type="number" name="maxScore" id="maxScore" min="1" max="10" value="10" />
                 </label>
