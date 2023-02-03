@@ -10,6 +10,7 @@
 body {
   font-family: "Poppins", sans-serif;
   color: #363636;
+  background-color: #edf2fb;
 }
 
 /**************************************************/
@@ -57,7 +58,7 @@ footer {
 }
 
 header {
-  margin: 2rem 0;
+  margin-bottom: 2rem o;
 }
 
 header > h1 {
@@ -144,7 +145,7 @@ section#btn-chart > button:first-of-type {
 }
 
 rect:hover {
-  fill: #f00c93;
+  fill: #fcb103;
 }
 
 circle:hover {

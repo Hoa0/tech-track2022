@@ -45,6 +45,8 @@ const xAxis = svg
 
 const y = d3.scaleBand().range([0, height]).padding(0.2);
 const yAxis = svg.append("g").attr("class", "axisY");
+const myColor = d3.scaleLinear().domain([0, 8])
+    .range(["pink", "red"])
 
 async function renderBarchart(dataset) {
     // console.log(await dataset)
@@ -74,7 +76,7 @@ async function renderBarchart(dataset) {
         .style("padding", "5px");
 
     // create variable for the bars
-    let u = svg.selectAll("rect").data(dataset);
+    let bars = svg.selectAll("rect").data(dataset);
 
     // mouseover event dat de tooltip maakt en laat zien
     const mouseover = function (event, d) {
@@ -99,18 +101,22 @@ async function renderBarchart(dataset) {
     const mouseleave = function (event, d) {
         tooltip.style("opacity", 0);
     };
+    //* 
+
 
     /**
      * het aanmaken van bars
      */
-    u.join(
+    bars.join(
         (enter) => {
             const balk = enter.append("rect");
-            balk.style("opacity", 0.75).append("title");
-            return balk;
+            balk.style("opacity", 0.75).append("title")
+            console.log(myColor)
+            return balk
+                .attr("fill", (d) => myColor(d.vote_average));
         },
         (update) => {
-            return update.transition().style("fill", "green");
+            return update.transition();
         },
         (exit) => {
             return exit.style("opacity", "0").remove();
@@ -122,15 +128,15 @@ async function renderBarchart(dataset) {
         .attr("y", (d) => y(d.title))
         .attr("width", (d) => x(d.vote_average))
         .attr("height", y.bandwidth())
-        .attr("fill", "pink")
+        //.attr("fill", "pink")
         .select("title")
         .text((d) => {
             return `${d.title}: ${d.vote_average}`;
         });
 
-    u.on("mouseover", mouseover)
-    u.on("mousemove", mousemove)
-    u.on("mouseleave", mouseleave);
+    bars.on("mouseover", mouseover)
+        .on("mousemove", mousemove)
+        .on("mouseleave", mouseleave);
 
 }
 
