@@ -25,8 +25,8 @@ async function getData(url) {
  * create dropdown button, werkt nog niet
  * @param {selector} String a query for d3's queryselector
  */
-function createDropdown (selector){
-    genres.forEach((element) =>{
+function createDropdown(selector) {
+    genres.forEach((element) => {
         d3.select(selector);
 
         let option = document.creareElement("option");
@@ -35,11 +35,11 @@ function createDropdown (selector){
         document.querySelector(selector).appendChild(option);
     });
 
-    d3.select(selector).on("change", (e) =>{
+    d3.select(selector).on("change", (e) => {
         //console.log(e.target.value);
     });
 }
 
-export {getData}
+export { getData }
 
 

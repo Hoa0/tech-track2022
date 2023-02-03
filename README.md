@@ -21,3 +21,22 @@ Als filmliefhebber, wil ik per film kunnen zien wat de score is op basis van de 
 
 ## API
 Voor dit project heb ik gebruik gemaakt van [themoviedb](https://www.themoviedb.org/documentation/api?language=nl-NL) API
+
+## Installaties :wrench:
+Voor het ophalen van deze repo in je terminal:
+```commandline
+git clone https://github.com/Hoa0/tech-track2022.git
+```
+
+NPM, geüpdatet versies ophalen
+```commandline
+npm install
+```
+
+Project starten
+```commandline
+npm run dev
+```
+
+## Licentie 
+MIT

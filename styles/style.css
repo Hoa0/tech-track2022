@@ -57,8 +57,8 @@ footer {
   text-align: center;
 }
 
-header{
-  margin-bottom:2rem;
+header {
+  margin-bottom: 2rem;
 }
 
 header>h1 {
@@ -70,12 +70,20 @@ main {
   justify-content: center;
 }
 
+.container-charts {
+  margin-top: 5rem;
+}
+
+.container-charts:last-of-type {
+  margin-bottom: 10rem;
+}
+
 #grafiek {
   display: flex;
 }
 
-.p-padding{
-  margin-bottom:2rem;
+.p-padding {
+  margin-bottom: 2rem;
 }
 
 .tooltip {
@@ -105,9 +113,19 @@ main>section:nth-of-type(2) {
   margin-top: 2em;
 }
 
-main section {
-  min-height: 50vh;
-  width: 100%;
+section#btn-chart {
+  display: flex;
+  justify-content: flex-end;
+}
+
+section#btn-chart>p {
+  margin-right: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+section#btn-chart>button:first-of-type {
+  margin-right: 0.5rem;
+
 }
 
 .barchart-tooltip {
@@ -125,4 +143,50 @@ main section {
 
 .barchart-tooltip p {
   padding: 0.3rem 1rem 0.3rem 1rem;
+}
+
+rect:hover {
+  fill: #f00c93;
+}
+
+circle:hover {
+  fill: green;
+}
+
+#maxScore {
+  width: 3rem;
+}
+
+/* CSS */
+button {
+  background-color: #fff;
+  border: 0 solid #e2e8f0;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  color: #0d172a;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.5rem 1.6rem;
+  text-align: center;
+  text-decoration: none #0d172a solid;
+  text-decoration-thickness: auto;
+  transition: all .1s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:hover {
+  background-color: #1e293b;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .button1 {
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+  }
 }
